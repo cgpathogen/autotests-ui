@@ -9,7 +9,7 @@ import pytest
     ("user.name@gmail.com", "  "),
     ("  ", "password")
 ])
-def test_empty_courses_list(chromium_page_with_state: Page, email:str, password:str):
+def test_wrong_email_or_password_authorization(chromium_page_with_state: Page, email:str, password:str):
 
         email_input = chromium_page_with_state.get_by_test_id("login-form-email-input").locator("input")
         email_input.fill(email)
