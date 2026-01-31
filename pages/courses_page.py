@@ -1,0 +1,30 @@
+from pages.base_page import BasePage
+from playwright.sync_api import Page, expect
+
+
+class CoursesPage(BasePage):
+    def __init__(self, page):
+        super().__init__(page)
+
+        self.courses_title = self.page.get_by_test_id("courses-list-toolbar-title-text")
+        self.create_new_course_button = self.page.get_by_test_id('courses-list-toolbar-create-course-button')
+
+        self.created_course_title = self.page.get_by_test_id("course-widget-title-text")
+        self.created_course_max_score = self.page.get_by_test_id("course-max-score-info-row-view-text")
+        self.created_course_min_score = self.page.get_by_test_id("course-min-score-info-row-view-text")
+        self.created_course_estimated_time = self.page.get_by_test_id("course-estimated-time-info-row-view-text")
+
+
+    def check_courses_title_is_visible(self):
+        expect(self.courses_title).to_be_visible()
+
+
+    def check_create_new_course_button_is_visible(self):
+        expect(self.create_new_course_button).to_be_visible()
+
+
+    def check_visible_course_card(self, index=0):
+        expect(self.created_course_title.nth(index)).to_be_visible()
+        expect(self.created_course_max_score.nth(index)).to_be_visible()
+        expect(self.created_course_min_score.nth(index)).to_be_visible()
+        expect(self.created_course_estimated_time.nth(index)).to_be_visible()

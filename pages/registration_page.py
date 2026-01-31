@@ -17,3 +17,7 @@ class RegistrationPage(BasePage):
         self.username_input.fill(username)
         self.password_input.fill(password)
         self.registration_button.click()
+
+
+    def click_registration_button(self):
+        self.registration_button.click()
