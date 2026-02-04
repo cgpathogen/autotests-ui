@@ -6,23 +6,30 @@ from pages.courses_page import CoursesPage
 
 @pytest.mark.courses
 @pytest.mark.regression
-def test_empty_courses_list(chromium_page: Page):
-    courses_main_title = chromium_page.get_by_test_id("courses-list-toolbar-title-text")
-    expect(courses_main_title).to_have_text("Courses")
+def test_empty_courses_list(
+        initialize_browser_state,
+        chromium_page: Page,
+        courses_page: CoursesPage
+):
+    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    # В итоге автотест test_empty_courses_list должен проверять следующие элементы:
+    # Отображение компонента Navbar — проверяет, что компонент Navbar корректно отображается на странице.
+    courses_page.navbar.check_visibility("UI Course", "username")
+    # Отображение компонента Sidebar — проверяет, что компонент Sidebar виден и корректно отрисован.
+    courses_page.sidebar.check_visible()
 
-    empty_folder_icon = chromium_page.get_by_test_id("courses-list-empty-view-icon")
-    expect(empty_folder_icon).to_be_visible()
-
-    no_results_title = chromium_page.get_by_test_id("courses-list-empty-view-title-text")
-    expect(no_results_title).to_have_text("There is no results")
-
-    results_info_paragraph = chromium_page.get_by_test_id("courses-list-empty-view-description-text")
-    expect(results_info_paragraph).to_have_text("Results from the load test pipeline will be displayed here")
+    # Отображение заголовка "Courses" — проверяет наличие и корректное отображение заголовка страницы.
+    courses_page.check_courses_title_is_visible()
+    # Отображение кнопки создания курса — проверяет, что кнопка для создания нового курса отображается.
+    courses_page.check_create_new_course_button_is_visible()
+    # Отображение пустого блока с текстом "There is no results" —
+    # проверяет, что при отсутствии курсов отображается соответствующий блок с сообщением об отсутствии результатов.
+    courses_page.check_no_results_title_is_visible()
 
 
 @pytest.mark.courses
 @pytest.mark.regression
-def test_create_course(initialize_browser_state, create_course_page: CreateCoursePage,courses_page: CoursesPage):
+def test_create_course(create_course_page: CreateCoursePage,courses_page: CoursesPage):
     create_course_page.open("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
     create_course_page.check_visible_create_course_title("Create course")
     create_course_page.check_disabled_create_course_button()

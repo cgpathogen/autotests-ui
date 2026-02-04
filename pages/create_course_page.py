@@ -110,7 +110,7 @@ class CreateCoursePage(BasePage):
         expect(self.empty_courses_block_subtitle).to_have_text(subtitle)
 
 
-    def fill_create_course_form(self, title: str, estimated_time: str,description: str, max_score: str, min_score: str):
+    def fill_create_course_form(self, title=None, estimated_time=None,description=None, max_score=None, min_score=None):
         self.title_course_input.fill(title)
         self.estimated_time_input.fill(estimated_time)
         self.course_description_input.fill(description)
