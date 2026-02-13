@@ -30,10 +30,6 @@ class CoursesPage(BasePage):
         expect(self.no_results_title).to_have_text("There is no results")
 
 
-    def check_create_new_course_button_is_visible(self):
-        expect(self.create_new_course_button).to_be_visible()
-
-
     def check_visible_course_card(self, index=0):
         expect(self.created_course_title.nth(index)).to_be_visible()
         expect(self.created_course_max_score.nth(index)).to_be_visible()

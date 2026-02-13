@@ -1,6 +1,5 @@
 import pytest
-from playwright.sync_api import expect, Page
-from pages.create_course_page import CreateCoursePage
+from playwright.sync_api import Page
 from pages.dashboard_page import DashboardPage
 from pages.courses_page import CoursesPage
 
@@ -13,10 +12,9 @@ def test_dashboard_displaying(
         courses_page: CoursesPage,
         dashboard_page: DashboardPage
 ):
-    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard")
 
     courses_page.navbar.check_visibility("UI Course", "username")
     courses_page.sidebar.check_visible()
-
-    courses_page.check_create_new_course_button_is_visible()
-    courses_page.check_no_results_title_is_visible()
+    dashboard_page.dashboard_toolbar_view_component.check_visible() # добавил компонент тут
+    dashboard_page.dashboard_toolbar_view_component.check_charts_view_visibility() # добавил компонент тут
