@@ -2,6 +2,8 @@ from pages.base_page import BasePage
 from playwright.sync_api import expect
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_components import SidebarComponent
+from elements.text import Text
+from elements.button import Button
 
 
 class CoursesPage(BasePage):
@@ -11,27 +13,27 @@ class CoursesPage(BasePage):
         self.navbar = NavbarComponent(page)
         self.sidebar = SidebarComponent(page)
 
-        self.courses_title = self.page.get_by_test_id("courses-list-toolbar-title-text")
-        self.create_new_course_button = self.page.get_by_test_id('courses-list-toolbar-create-course-button')
-        self.no_results_title = self.page.get_by_test_id("courses-list-empty-view-title-text")
+        self.courses_title = Text(page,"courses-list-toolbar-title-text", 'courses_title')
+        self.create_new_course_button = Button(page,'courses-list-toolbar-create-course-button','new-course-button')
+        self.no_results_title = Text(page,"courses-list-empty-view-title-text",'no_results_title')
 
-        self.created_course_title = self.page.get_by_test_id("course-widget-title-text")
-        self.created_course_max_score = self.page.get_by_test_id("course-max-score-info-row-view-text")
-        self.created_course_min_score = self.page.get_by_test_id("course-min-score-info-row-view-text")
-        self.created_course_estimated_time = self.page.get_by_test_id("course-estimated-time-info-row-view-text")
+        self.created_course_title = Text(page,"course-widget-title-text", 'created_course_title')
+        self.created_course_max_score = Text(page,"course-max-score-info-row-view-text", 'created_course_max_score')
+        self.created_course_min_score = Text(page, "course-max-score-info-row-view-text", 'created_course_min_score')
+        self.created_course_estimated_time = Text(page,"course-estimated-time-info-row-view-text", 'estimated-time')
 
 
     def check_courses_title_is_visible(self):
-        expect(self.courses_title).to_be_visible()
+        self.courses_title.check_visible()
 
 
     def check_no_results_title_is_visible(self):
-        expect(self.no_results_title).to_be_visible()
-        expect(self.no_results_title).to_have_text("There is no results")
+        self.no_results_title.check_visible()
+        self.no_results_title.check_have_text("There is no results")
 
 
     def check_visible_course_card(self, index=0):
-        expect(self.created_course_title.nth(index)).to_be_visible()
-        expect(self.created_course_max_score.nth(index)).to_be_visible()
-        expect(self.created_course_min_score.nth(index)).to_be_visible()
-        expect(self.created_course_estimated_time.nth(index)).to_be_visible()
+        self.created_course_title.check_visible(index)
+        self.created_course_max_score.check_visible(index)
+        self.created_course_min_score.check_visible(index)
+        self.created_course_estimated_time.check_visible(index)

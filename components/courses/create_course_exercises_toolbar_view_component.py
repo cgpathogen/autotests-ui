@@ -11,7 +11,7 @@ class CreateCourseExercisesToolbarViewComponent(BaseComponent):
         self.exercises_title = Text(
             page, "create-course-exercises-box-toolbar-title-text", "exercises_title"
         )
-        self.add_course_button = Button(
+        self.create_course_button = Button(
             page, "create-course-exercises-box-toolbar-create-exercise-button", 'add_course_button'
         )
 
@@ -20,9 +20,9 @@ class CreateCourseExercisesToolbarViewComponent(BaseComponent):
         self.exercises_title.check_visible()
         self.exercises_title.check_have_text(title_name)
 
-        self.add_course_button.check_visible()
-        self.add_course_button.check_enabled()
+        self.create_course_button.check_visible()
+        self.create_course_button.check_enabled()
 
 
     def click_create_exercise_button(self):
-        self.add_course_button.click()
+        self.create_course_button.click()

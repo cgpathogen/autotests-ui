@@ -10,14 +10,9 @@ class LoginFormComponent(BaseComponent):
         self.password_input = Input(self.page, "login-form-password-input","password")
 
 
-    def check_visible(self, email: str, password: str):
+    def check_visible(self):
         self.email_input.check_visible()
         self.password_input.check_visible()
-
-        self.fill(email=email, password=password)
-
-        self.email_input.check_have_value(email)
-        self.password_input.check_have_value(password)
 
 
     def fill(self, email: str, password: str):

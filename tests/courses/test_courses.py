@@ -57,7 +57,7 @@ class TestCourses:
         create_course_page.upload_image("testdata/files/image.png")
         create_course_page.check_visible_image_remove_view('Tap on "Upload image" button to select file','Recommended file size 540X300')
         # компоненты добавлены тут
-        create_course_form_component.check_visible()
+        create_course_form_component.check_visible("","","","0","0")
         create_course_form_component.fill("Playwright","2 weeks","Playwright","100","10")
 
         create_course_page.click_create_course_button()
