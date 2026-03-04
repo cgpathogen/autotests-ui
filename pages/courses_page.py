@@ -1,5 +1,4 @@
 from pages.base_page import BasePage
-from playwright.sync_api import expect
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_components import SidebarComponent
 from elements.text import Text
