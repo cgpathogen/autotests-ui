@@ -1,20 +1,27 @@
 import pytest
+import allure
+from tools.allure.epics import AllureEpic
+from tools.allure.features import AllureFeature
+from tools.allure.stories import AllureStory
 from playwright.sync_api import Page
-
 from components.courses.create_course_toolbar_view_component import CreateCourseToolbarViewComponent
 from components.courses.create_course_exercises_toolbar_view_component import CreateCourseExercisesToolbarViewComponent
 from pages.create_course_page import CreateCoursePage
 from pages.courses_page import CoursesPage
-
 from components.courses.create_course_form_component import CreateCourseFormComponent
-from components.courses.courses_view_component import CourseViewComponent
-from components.courses.course_view_menu_component import CourseViewMenuComponent
-from components.courses.image_upload_widget_component import ImageUploadWidgetComponent
 
 
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.COURSES)
+@allure.story(AllureStory.COURSES)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.COURSES)
+@allure.sub_suite(AllureStory.COURSES)
 class TestCourses:
+
     @pytest.mark.courses
     @pytest.mark.regression
+    @allure.title("Empty course visibility")
     def test_empty_courses_list(self,
             initialize_browser_state,
             chromium_page: Page,
@@ -22,23 +29,16 @@ class TestCourses:
     ):
         create_course_form_component = CreateCourseToolbarViewComponent(chromium_page)
         chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
-        # В итоге автотест test_empty_courses_list должен проверять следующие элементы:
-        # Отображение компонента Navbar — проверяет, что компонент Navbar корректно отображается на странице.
         courses_page.navbar.check_visibility("UI Course", "username")
-        # Отображение компонента Sidebar — проверяет, что компонент Sidebar виден и корректно отрисован.
         courses_page.sidebar.check_visible()
-
-        # Отображение заголовка "Courses" — проверяет наличие и корректное отображение заголовка страницы.
-        create_course_form_component.check_courses_title_is_visible() # компонент добавлен тут
-        # Отображение кнопки создания курса — проверяет, что кнопка для создания нового курса отображается.
-        create_course_form_component.check_create_new_course_button_is_visible() # компонент добавлен тут
-        # Отображение пустого блока с текстом "There is no results" —
-        # проверяет, что при отсутствии курсов отображается соответствующий блок с сообщением об отсутствии результатов.
-        create_course_form_component.click_create_new_course_button() # компонент добавлен тут
+        create_course_form_component.check_courses_title_is_visible()
+        create_course_form_component.check_create_new_course_button_is_visible()
+        create_course_form_component.click_create_new_course_button()
 
 
     @pytest.mark.courses
     @pytest.mark.regression
+    @allure.title("Course creation")
     def test_create_course(self, create_course_page: CreateCoursePage, courses_page: CoursesPage, chromium_page: Page):
 
         create_course_form_component = CreateCourseFormComponent(chromium_page) # компонент
@@ -66,6 +66,7 @@ class TestCourses:
 
     @pytest.mark.courses
     @pytest.mark.regression
+    @allure.title("Edition of course")
     def test_edit_course(self, create_course_page: CreateCoursePage, courses_page: CoursesPage, chromium_page: Page):
 
         create_course_page.open("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
