@@ -1,7 +1,8 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 from components.base_component import BaseComponent
 from elements.input import Input
 from elements.textarea import Textarea
+import allure
 
 
 class CreateCourseFormComponent(BaseComponent):
@@ -15,6 +16,7 @@ class CreateCourseFormComponent(BaseComponent):
         self.min_score_input = Input(self.page, "create-course-form-min-score-input", 'min_score_input')
 
 
+    @allure.step("Checking that form component is visible")
     def check_visible(
             self,
             title_course:str,
@@ -23,18 +25,19 @@ class CreateCourseFormComponent(BaseComponent):
             max_score:str,
             min_score:str
     ):
-        self.title_course_input.check_visible()
-        self.title_course_input.check_have_value(title_course)
-        self.estimated_time_input.check_visible()
-        self.estimated_time_input.check_have_value(estimated_time)
-        self.course_description_input.check_visible()
-        self.course_description_input.check_have_value(course_description)
-        self.max_score_input.check_visible()
-        self.max_score_input.check_have_value(max_score)
-        self.min_score_input.check_visible()
-        self.min_score_input.check_have_value(min_score)
+            self.title_course_input.check_visible()
+            self.title_course_input.check_have_value(title_course)
+            self.estimated_time_input.check_visible()
+            self.estimated_time_input.check_have_value(estimated_time)
+            self.course_description_input.check_visible()
+            self.course_description_input.check_have_value(course_description)
+            self.max_score_input.check_visible()
+            self.max_score_input.check_have_value(max_score)
+            self.min_score_input.check_visible()
+            self.min_score_input.check_have_value(min_score)
 
 
+    @allure.step("Checking that course input is visible")
     def fill(self, title: str, estimated_time: str, description: str, max_score: str, min_score: str):
         self.title_course_input.fill(title)
         self.title_course_input.check_have_value(title)
