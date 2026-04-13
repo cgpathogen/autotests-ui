@@ -6,6 +6,7 @@ from tools.allure.stories import AllureStory
 from playwright.sync_api import Page
 from pages.dashboard_page import DashboardPage
 from pages.courses_page import CoursesPage
+from tools.routes import AppRoute
 
 
 @allure.epic(AllureEpic.LMS)
@@ -25,7 +26,7 @@ class TestDashboard:
             courses_page: CoursesPage,
             dashboard_page: DashboardPage
     ):
-        chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard")
+        chromium_page.goto(AppRoute.DASHBOARD)
 
         courses_page.navbar.check_visibility("UI Course", "username")
         courses_page.sidebar.check_visible()

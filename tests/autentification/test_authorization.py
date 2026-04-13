@@ -6,7 +6,7 @@ from tools.allure.stories import AllureStory
 from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 from components.authentication.login_form_component import LoginFormComponent
-
+from tools.routes import AppRoute
 
 
 @allure.epic(AllureEpic.LMS)
@@ -20,7 +20,7 @@ class TestAuthorization:
     @pytest.mark.courses
     @pytest.mark.regression
     @pytest.mark.parametrize('email, password', [
-        ("user.name@gmail.com", "password"),
+        ("user.naaame@gmail.com", "password"),
         ("user.name@gmail.com", "  "),
         ("  ", "password")
     ])
@@ -34,7 +34,7 @@ class TestAuthorization:
 
         login_form_component = LoginFormComponent(chromium_page)
 
-        chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
+        login_page.open(AppRoute.LOGIN)
         login_form_component.check_visible()
         login_form_component.fill(email, password)
         login_page.click_login_button()

@@ -8,6 +8,8 @@ from components.authentication.registration_form_component import RegistrationFo
 from components.dashboard.dashboard_toolbar_view_component import DashboardToolbarViewComponent
 from pages.dashboard_page import DashboardPage
 from pages.registration_page import RegistrationPage
+from tools.routes import AppRoute
+from config import settings
 
 
 @allure.epic(AllureEpic.LMS)
@@ -30,8 +32,12 @@ class TestRegistration:
         registration_form_component = RegistrationFormComponent(chromium_page)
         dashboard_toolbar_view_component = DashboardToolbarViewComponent(chromium_page)
 
-        registration_page.open("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+        registration_page.open(AppRoute.REGISTRATION)
 
-        registration_form_component.check_visible(email="username@gmail.com",username="username",password="password")
+        registration_form_component.check_visible(
+            email=settings.test_user.email,
+            username=settings.test_user.username,
+            password=settings.test_user.password
+        )
         registration_page.click_registration_button()
         dashboard_toolbar_view_component.check_visible() # добавил компонент тут

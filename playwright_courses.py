@@ -1,4 +1,6 @@
 from playwright.sync_api import sync_playwright, expect
+from tools.routes import AppRoute
+from config import settings
 
 
 with sync_playwright() as pw:
@@ -6,16 +8,16 @@ with sync_playwright() as pw:
     context = browser.new_context()
     page = context.new_page()
 
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    page.goto(AppRoute.REGISTRATION)
 
     user_email = page.get_by_test_id("registration-form-email-input").locator("input")
-    user_email.fill("user@gmail.com")
+    user_email.fill(settings.test_user.email)
 
     user_name = page.get_by_test_id("registration-form-username-input").locator("input")
-    user_name.fill("username")
+    user_name.fill(settings.test_user.username)
 
     user_password = page.get_by_test_id("registration-form-password-input").locator("input")
-    user_password.fill("password")
+    user_password.fill(settings.test_user.password)
 
     reg_btn = page.get_by_test_id("registration-page-registration-button")
     reg_btn.click()
@@ -28,7 +30,7 @@ with sync_playwright() as pw:
     context = browser.new_context(storage_state="data.json")
     page = context.new_page()
 
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    page.goto(AppRoute.COURSES)
 
     main_title = page.get_by_test_id("courses-list-toolbar-title-text")
     expect(main_title).to_have_text("Courses")
